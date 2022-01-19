@@ -27,7 +27,7 @@ class LiveControl3(ControlSurface):
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
         self.show_message("LiveControl 3 ready")
-
+        logger.info("Script loaded")
         self._live_test()
 
         with self.component_guard():
