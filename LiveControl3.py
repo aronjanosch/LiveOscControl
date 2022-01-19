@@ -18,7 +18,7 @@ class LiveControl3(ControlSurface):
 
         with self.component_guard():
             self._setup_device_and_transport_control()
-        raise LoggingError("Log:" + str(Live.__file__))
+        raise LoggingError("Log:" + (Live.__path__.__dict__["_path"][0]))
 
     def _setup_device_and_transport_control(self):
         self._device = DeviceComponent()
