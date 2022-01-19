@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Frameworks
+/_Framework/
+/ableton/
+/References/
+
+#IDE
+.idea/
