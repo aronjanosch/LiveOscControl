@@ -5,11 +5,6 @@ from _Framework.ButtonElement import ButtonElement
 from _Framework.DeviceComponent import DeviceComponent
 from _Framework.TransportComponent import TransportComponent
 
-import importlib
-try:
-    import inspect
-except:
-    pass
 
 class LoggingError(Exception):
     pass
@@ -19,23 +14,11 @@ class LiveControl3(ControlSurface):
 
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
-
-
-        path = "Nothing Found"
-
-        try:
-            path = importlib.util.find_spec("Live")
-        except:
-            pass
-
-        try:
-            path = inspect.getfile(Live)
-        except:
-            pass
-        self.show_message(path)
+        self.show_message("LiveControl 3 ready")
 
         with self.component_guard():
             self._setup_device_and_transport_control()
+        raise LoggingError("Log:" + (Live.__path__.__dict__["_path"][0]))
 
     def _setup_device_and_transport_control(self):
         self._device = DeviceComponent()
