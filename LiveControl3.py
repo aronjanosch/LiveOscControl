@@ -1,10 +1,22 @@
 # LiveControl3.py
+import os
+import logging
+
 import Live
 from _Framework.ControlSurface import ControlSurface
 from _Framework.ButtonElement import ButtonElement
 from _Framework.DeviceComponent import DeviceComponent
 from _Framework.TransportComponent import TransportComponent
 
+
+logger = logging.getLogger("LiveOSCControl")
+tmp_dir = "/tmp"
+log_path = os.path.join(tmp_dir, "LiveOSCC.log")
+file_handler = logging.FileHandler(log_path)
+file_handler.setLevel(logging.INFO)
+formatter = logging.Formatter('(%(asctime)s) [%(levelname)s] %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 class LoggingError(Exception):
     pass
@@ -18,7 +30,6 @@ class LiveControl3(ControlSurface):
 
         with self.component_guard():
             self._setup_device_and_transport_control()
-        raise LoggingError("Log:" + (Live.__path__.__dict__["_path"][0]))
 
     def _setup_device_and_transport_control(self):
         self._device = DeviceComponent()
@@ -26,6 +37,13 @@ class LiveControl3(ControlSurface):
         self.transport.set_play_button(ButtonElement(1, 1, 0, 104)) # ButtonElement(is_momentary, msg_type, channel, identifier)
         self.transport.set_stop_button(ButtonElement(1, 1, 0, 105))
         self.transport.set_record_button(ButtonElement(1, 1, 0, 106))
+
+    def _live_test(self):
+        button_up = ButtonElement(1, 1, 0, 104)
+
+
+        if button_up.pressed():
+            logger.info(str(Live.Song.Song.is_playing()))
 
 
 
