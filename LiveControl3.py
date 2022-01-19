@@ -43,7 +43,7 @@ class LiveControl3(ControlSurface):
     def _live_test(self):
         self.button_up = ButtonElement(1, 1, 0, 104)
 
-        if self.button_up.pressed():
+        if self.button_up.is_pressed():
             logger.info(str(Live.Song.Song.is_playing()))
 
 
