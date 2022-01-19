@@ -39,10 +39,9 @@ class LiveControl3(ControlSurface):
         self.transport.set_record_button(ButtonElement(1, 1, 0, 106))
 
     def _live_test(self):
-        button_up = ButtonElement(1, 1, 0, 104)
+        self.button_up = ButtonElement(1, 1, 0, 104)
 
-
-        if button_up.pressed():
+        if self.button_up.pressed():
             logger.info(str(Live.Song.Song.is_playing()))
 
 
