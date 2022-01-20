@@ -29,6 +29,8 @@ class LiveControl3(ControlSurface):
         self.show_message("LiveControl 3 ready")
         logger.info("Script loaded")
         logger.info(Live.Application.get_application())
+        method = self.song().add_metronome_listener()
+        method(self._live_test)
 
         with self.component_guard():
             self._setup_device_and_transport_control()
@@ -42,10 +44,7 @@ class LiveControl3(ControlSurface):
         self.transport.set_record_button(ButtonElement(1, 1, 0, 106))
 
     def _live_test(self):
-        self.button_up = ButtonElement(1, 1, 0, 104)
-
-        if self.button_up.is_pressed():
-            logger.info(str(Live.Song.Song.is_playing()))
+        logger.info("Mein Schatzi ist soooo toll")
 
 
 
