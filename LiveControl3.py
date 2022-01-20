@@ -28,6 +28,7 @@ class LiveControl3(ControlSurface):
         ControlSurface.__init__(self, c_instance)
         self.show_message("LiveControl 3 ready")
         logger.info("Script loaded")
+        logger.info(Live.Application.get_application())
 
         with self.component_guard():
             self._setup_device_and_transport_control()
