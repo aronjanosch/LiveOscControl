@@ -36,10 +36,13 @@ class SongHandler(OSCHandler):
                            'duplicate_track': {'type': 'function', 'parameters': 1, 'parameter_type': "int"}}
 
         self.callbacks = {}
+        self.add_listeners()
 
     def add_listeners(self):
+        self.logger.info("Adding Song Listeners")
         for listener in self.song_listeners + self.song_view_listeners:
             self.callbacks[listener] = self._add_listener(self.song, listener)
+
 
     def old_add_listener(self):
         """
