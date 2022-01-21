@@ -22,5 +22,5 @@ class OSCHandler:
             self.logger.info("Property %s has changed to: %s" % (prop, value))
         listener_func = getattr(target, "add_" + prop + "_listener")
         listener_func(callback)
-        self.logger.info("Added Listener for" + str(prop))
+        self.logger.info("Added Listener for: ." + str(prop))
         return callback
