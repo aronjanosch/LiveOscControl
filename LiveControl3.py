@@ -29,7 +29,10 @@ class LiveControl3(ControlSurface):
         self.show_message("LiveControl 3 ready")
         logger.info("Script loaded")
         logger.info(Live.Application.get_application())
-        method = self.song().add_metronome_listener()
+        song = self.song()
+        method = getattr(song, "add_metronome_listener")
+        self.song().add_loop_listener(self._live_test())
+        logger.info(method)
         method(self._live_test)
 
         with self.component_guard():
