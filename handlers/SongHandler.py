@@ -40,7 +40,7 @@ class SongHandler(OSCHandler):
 
     def add_listeners(self):
         self.logger.info("Adding Song Listeners")
-        for listener in self.song_listeners + self.song_view_listeners:
+        for listener in self.song_listeners:
             self.callbacks[listener] = self._add_listener(self.song, listener)
 
 
