@@ -31,9 +31,10 @@ class LiveControl3(ControlSurface):
         logger.info(Live.Application.get_application())
         song = self.song()
         method = getattr(song, "add_metronome_listener")
-        self.song().add_loop_listener(self._live_test())
+        method2 = getattr(song, "add_loop_listener")
         logger.info(method)
         method(self._live_test)
+        method2(self._live_test)
 
         with self.component_guard():
             self._setup_device_and_transport_control()
