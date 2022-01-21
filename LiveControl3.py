@@ -32,7 +32,7 @@ class LiveControl3(ControlSurface):
         self.init_liveosc()
 
     def init_liveosc(self):
-        self.logger.info("Instantiate Handlers")
+        logger.info("Instantiate Handlers")
         with self.component_guard():
             self.handlers = [
                 handlers.SongHandler(song=self.song())
