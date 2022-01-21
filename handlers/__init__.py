@@ -1,6 +1,6 @@
 from .SongHandler import SongHandler
 import logging
-logger = logging.getLogger("abletonosc")
-logger.info("reloaded abletonosc")
+logger = logging.getLogger("LiveOSCControl")
+logger.info("reloaded LiveOSCControl")
 
 

@@ -4,7 +4,7 @@ import logging
 
 class OSCHandler:
     def __init__(self):
-        self.logger = logging.getLogger("LiveOSCC")
+        self.logger = logging.getLogger("LiveOSCControl")
 
     #--------------------------------------------------------------------------------
     # Generic callbacks
