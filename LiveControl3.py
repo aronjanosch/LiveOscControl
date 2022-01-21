@@ -1,12 +1,12 @@
 # LiveControl3.py
+
+from . import handlers
+
 import os
 import logging
 
 import Live
 from _Framework.ControlSurface import ControlSurface
-from _Framework.ButtonElement import ButtonElement
-from _Framework.DeviceComponent import DeviceComponent
-from _Framework.TransportComponent import TransportComponent
 
 
 logger = logging.getLogger("LiveOSCControl")
@@ -23,32 +23,20 @@ class LoggingError(Exception):
 
 
 class LiveControl3(ControlSurface):
-
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
+        self.handlers =[]
         self.show_message("LiveControl 3 ready")
         logger.info("Script loaded")
-        logger.info(Live.Application.get_application())
-        song = self.song()
-        method = getattr(song, "add_metronome_listener")
-        method2 = getattr(song, "add_loop_listener")
-        logger.info(method)
-        method(self._live_test)
-        method2(self._live_test)
+
+        self.init_liveosc()
+
+    def init_liveosc(self):
 
         with self.component_guard():
-            self._setup_device_and_transport_control()
-            self._live_test()
-
-    def _setup_device_and_transport_control(self):
-        self._device = DeviceComponent()
-        self.transport = TransportComponent()
-        self.transport.set_play_button(ButtonElement(1, 1, 0, 104)) # ButtonElement(is_momentary, msg_type, channel, identifier)
-        self.transport.set_stop_button(ButtonElement(1, 1, 0, 105))
-        self.transport.set_record_button(ButtonElement(1, 1, 0, 106))
-
-    def _live_test(self):
-        logger.info("Mein Schatzi ist soooo toll")
+            self.handlers = [
+                handlers.SongHandler(song=self.song())
+            ]
 
 
 
