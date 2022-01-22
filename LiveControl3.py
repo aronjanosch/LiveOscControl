@@ -1,6 +1,7 @@
 # LiveControl3.py
 
 from . import handlers
+import config
 
 import os
 import logging
@@ -8,24 +9,21 @@ import logging
 import Live
 from _Framework.ControlSurface import ControlSurface
 
-
+if config.DEBUG:
+    logging_level = logging.DEBUG
+else:
+    logging_level = logging.CRITICAL
 logger = logging.getLogger("LiveOSCControl")
-tmp_dir = "/tmp"
-log_path = os.path.join(tmp_dir, "LiveOSCC.log")
-file_handler = logging.FileHandler(log_path)
-file_handler.setLevel(logging.INFO)
-formatter = logging.Formatter('(%(asctime)s) [%(levelname)s] %(message)s')
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
-
-class LoggingError(Exception):
-    pass
+logging.basicConfig(level=logging_level,
+                    format='%(asctime)s %(levelname)s %(message)s',
+                    filename=config.LOG_FILE,
+                    filemode='w')
 
 
 class LiveControl3(ControlSurface):
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
-        self.handlers =[]
+        self.handlers = []
         self.show_message("LiveControl 3 ready")
         logger.info("Script loaded")
 
@@ -37,7 +35,3 @@ class LiveControl3(ControlSurface):
             self.handlers = [
                 handlers.SongHandler(song=self.song())
             ]
-
-
-
-        
