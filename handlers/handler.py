@@ -1,16 +1,22 @@
+from typing import Callable
+
 from ableton.v2.control_surface.component import Component
 import logging
+from .osc_handler import OSCServer
 
 
-class OSCHandler:
-    def __init__(self):
+class Handler:
+    def __init__(self, manager):
+
         self.logger = logging.getLogger("LiveOSCControl")
+        self.manager = manager
+        self.osc_handler: OSCServer = self.manager.osc_handler
 
     #--------------------------------------------------------------------------------
     # Generic callbacks
     #--------------------------------------------------------------------------------
 
-    def _add_listener(self, target, prop):
+    def _add_listener(self, target: Callable, prop: str):
         """
         creates listener at target (Live)
         :param target: Live target

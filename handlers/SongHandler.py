@@ -1,16 +1,16 @@
-from .handler import OSCHandler
+from .handler import Handler
 
 
-class SongHandler(OSCHandler):
-    def __init__(self, song):
+class SongHandler(Handler):
+    def __init__(self, song, manager):
         self.song = song
-        super().__init__()
+        super().__init__(manager)
         self.song_listeners = ['tempo', 'signature_numerator', 'signature_denominator', 'is_playing', 'record_mode',
                                'metronome', 'loop', 'overdub', 'clip_trigger_quantization',
                                'midi_recording_quantization', 'back_to_arranger', 'current_song_time']
         self.song_view_listeners = ['detail_clip', 'selected_scene', 'selected_track']
 
-        self.properties = {'is_playing': {'type': 'attribute'},
+        self.properties = {'is_playing': {'type': 'attribute', 'readonly': True},
                            'metronome': {'type': 'attribute'},
                            'tempo': {'type': 'attribute'},
                            'signature_numerator': {'type': 'attribute'},
@@ -43,19 +43,9 @@ class SongHandler(OSCHandler):
         for listener in self.song_listeners:
             self.callbacks[listener] = self._add_listener(self.song, listener)
 
+    def add_osc_callbacks(self):
+        for key, value in self.callbacks.items():
+            self.osc_handler.add_handler("/song/get")
 
-    def old_add_listener(self):
-        """
-        creates Listeners for each listener
-        :param self:
-        :return:
-        """
 
-        for listener in self.song_listeners + self.song_view_listeners:
-            callback = self.test_func
-            method = getattr(self.song, "add_" + listener + "_listener")
-            method(callback)
-            self.callbacks[listener] = callback
-
-    def test_func(self):
-        self.logger.info("Listener Callback:  ")
+# Listneres werden gesendet von OSC Serve. Da handler hier Server importiert können acuh heir callbacks verwaltet werden

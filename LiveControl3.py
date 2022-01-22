@@ -25,6 +25,8 @@ class LiveControl3(ControlSurface):
         ControlSurface.__init__(self, c_instance)
         self.handlers = []
         self.show_message("LiveControl 3 ready")
+
+        self.osc_handler = handlers.OSCServer
         logger.info("Script loaded")
 
         self.init_liveosc()
@@ -33,5 +35,5 @@ class LiveControl3(ControlSurface):
         logger.info("Instantiate Handlers")
         with self.component_guard():
             self.handlers = [
-                handlers.SongHandler(song=self.song())
+                handlers.SongHandler(manager=self, song=self.song())
             ]
